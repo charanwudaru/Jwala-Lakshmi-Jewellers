@@ -68,6 +68,12 @@ npm --version
 psql --version
 ```
 
+### ⚠️ Important: Virtual Environment (venv)
+
+**All Python commands MUST be run within a Python virtual environment (venv).**
+
+A virtual environment isolates project dependencies and prevents conflicts with system-wide packages. Never run Python commands outside the venv.
+
 ---
 
 ## 📁 Project Structure
@@ -127,6 +133,13 @@ source venv/bin/activate
 
 #### Install Dependencies
 ```bash
+# Make sure venv is activated before installing
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Then install dependencies
 pip install -r requirements.txt
 ```
 
@@ -150,17 +163,37 @@ CLOUDINARY_API_SECRET=your_api_secret
 
 #### Create Database
 ```bash
-# From the backend directory
+# Ensure venv is activated (you should already be in venv from previous step)
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# From the backend directory, run:
 python create_db.py
 ```
 
 #### Run Database Migrations
 ```bash
+# Ensure venv is activated
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Then run migrations
 alembic upgrade head
 ```
 
 #### Seed Admin User (Optional)
 ```bash
+# Ensure venv is activated
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Then seed the admin user
 python seed_admin.py
 # Default credentials: admin@jewellers.com / password
 ```
@@ -187,13 +220,14 @@ npm install
 ```bash
 cd backend
 
-# Activate virtual environment (if not already activated)
+# ALWAYS activate virtual environment first
 # Windows
 venv\Scripts\activate
 # macOS/Linux
 source venv/bin/activate
 
-# Run the server
+# Verify venv is activated (you should see (venv) in your prompt)
+# Then run the server
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
@@ -216,8 +250,16 @@ Create a `start.bat` file in the root directory:
 
 ```batch
 @echo off
+echo Starting Backend (FastAPI on port 8000)...
 start cmd /k "cd backend && venv\Scripts\activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+
+echo Starting Frontend (Next.js on port 3000)...
 start cmd /k "cd jewelbridge && npm run dev"
+
+echo.
+echo Both servers should be running now:
+echo - Backend: http://localhost:8000
+echo - Frontend: http://localhost:3000
 ```
 
 Then run:
@@ -256,11 +298,28 @@ npm start
 ### Create Database Tables
 ```bash
 cd backend
+
+# Always activate venv first
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Then run the database creation
 python create_db.py
 ```
 
 ### Run Migrations
 ```bash
+# Navigate to backend directory
+cd backend
+
+# Activate venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
 # Apply all pending migrations
 alembic upgrade head
 
@@ -273,6 +332,15 @@ alembic revision --autogenerate -m "description of changes"
 
 ### Seed Admin User
 ```bash
+cd backend
+
+# Activate venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Seed the admin user
 python seed_admin.py
 ```
 
@@ -351,7 +419,15 @@ Once the backend is running, access the interactive API documentation:
 
 #### "ModuleNotFoundError" when running backend
 ```bash
-# Ensure virtual environment is activated and dependencies installed
+cd backend
+
+# Activate virtual environment
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Ensure dependencies are installed
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
@@ -366,6 +442,14 @@ pip install -r requirements.txt
 
 #### Port already in use
 ```bash
+cd backend
+
+# Activate venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
 # Change port in uvicorn command
 uvicorn main:app --reload --port 8001
 ```
